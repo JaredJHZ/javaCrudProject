@@ -6,6 +6,7 @@
 package app;
 
 import controllers.BaseDeDatos;
+import controllers.ControladorDeAsignaciones;
 import controllers.ControladorDeProyectos;
 import controllers.ControladorDeTrabajadores;
 import controllers.ControladorDepartamentos;
@@ -13,6 +14,7 @@ import java.time.Month;
 import java.util.Date;
 import controllers.ControladorJefesDeDepartamento;
 import java.time.LocalDate;
+import models.Asignaciones;
 import models.Departamentos;
 import models.JefesDelDepartamento;
 import models.Proyectos;
@@ -95,17 +97,32 @@ public class Main {
        
        // --PROYECTOS --
        
-       Proyectos proyectoUno = new Proyectos();
+       //Proyectos proyectoUno = new Proyectos();
        
-       proyectoUno.setIdProyecto("00000001");
-       proyectoUno.setIdJefe("00000001");
-       proyectoUno.setNombreProyecto("Web Page");
-       proyectoUno.setPresupuesto(30000);
-       proyectoUno.setFechaDeInicio(LocalDate.now());
-       proyectoUno.setDuracionDeSemanasEsperadas(3);
+       //proyectoUno.setIdProyecto("00000001");
+       //proyectoUno.setIdJefe("00000001");
+       //proyectoUno.setNombreProyecto("Web Page");
+       //proyectoUno.setPresupuesto(30000);
+       //proyectoUno.setFechaDeInicio(LocalDate.now());
+       //proyectoUno.setDuracionDeSemanasEsperadas(3);
        //ControladorDeProyectos.postProyectos(proyectoUno);
        //ControladorDeProyectos.borrarProyectoById("00000001");
-       ControladorDeProyectos.actualizarTrabajador(proyectoUno);
+       //ControladorDeProyectos.actualizarTrabajador(proyectoUno);
        
+       // -- Asignaciones --
+       
+       //Asignaciones asignacion = new Asignaciones();
+       
+       //asignacion.setIdEmpleado("00000001");
+       //asignacion.setIdProyecto("00000001");
+       //asignacion.setHorasAsignadas(5);
+       //asignacion.setCalificacion(10);
+       
+        //asignacion = ControladorDeAsignaciones.getAsignacionesByIdOfEmpleado("00000001");
+        
+        //System.out.println(asignacion.getCalificacion());
+         //ControladorDeAsignaciones.actualizarAsignacion(asignacion);
+        
+       //ControladorDeAsignaciones.borrarProyectoById("00000001", "00000001");
     }
 }
