@@ -6,12 +6,16 @@
 package app;
 
 import controllers.BaseDeDatos;
+import controllers.ControladorDeProyectos;
 import controllers.ControladorDeTrabajadores;
 import controllers.ControladorDepartamentos;
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.Date;
+import controllers.ControladorJefesDeDepartamento;
+import java.time.LocalDate;
 import models.Departamentos;
+import models.JefesDelDepartamento;
+import models.Proyectos;
 import models.Trabajadores;
 
 /**
@@ -45,18 +49,20 @@ public class Main {
        
        // -- Tranajadores --
        
-       Trabajadores trabajador = new Trabajadores();
+       //Trabajadores trabajador = new Trabajadores();
        
-       trabajador.setIdEmpleado("00000001");
-       trabajador.setIdDepartamento("00000001");
-       trabajador.setNombre("Abraham");
-       trabajador.setApellidoPaterno("Vasconcelos");
-       trabajador.setApellidoMaterno("Ruiz");
-       trabajador.setFechaDeNacimiento(LocalDate.of(1997, Month.MAY, 15));
-       trabajador.setFechaDeContratacion(LocalDate.now());
-       trabajador.setSalario(5500);
+       //trabajador.setIdEmpleado("00000002");
+       //trabajador.setIdDepartamento("00000001");
+       //trabajador.setNombre("Jared");
+       //trabajador.setApellidoPaterno("H");
+       //trabajador.setApellidoMaterno("Z");
+       //trabajador.setFechaDeNacimiento(LocalDate.of(1997, Month.JUNE, 25));
+       //trabajador.setFechaDeContratacion(LocalDate.now());
+       //trabajador.setSalario(5500);
        
-       ControladorDeTrabajadores.actualizarTrabajador(trabajador);
+       //ControladorDeTrabajadores.postTrabajador(trabajador);
+       
+       //ControladorDeTrabajadores.actualizarTrabajador(trabajador);
        
        //trabajador = ControladorDeTrabajadores.getTrabajadoresById("00000001");
        //System.out.println(trabajador.getApellidoPaterno());
@@ -66,6 +72,40 @@ public class Main {
        //ControladorDeTrabajadores.borrarTrabajadorById("00000001");
        
        
+       
+       // -- JEFES DEL DEPARTAMENTO --
+       
+       //JefesDelDepartamento jefe = new JefesDelDepartamento();
+       
+       //jefe.setIdJefe("00000001");
+       //jefe.setIdDepto("00000001");
+       //jefe.setIdEmpleado("00000002");
+       
+       //ControladorJefesDeDepartamento.postJefeDelDepartamento(jefe);
+       
+       //ControladorJefesDeDepartamento.actualizarJefeDeDepartamento(jefe);
+       
+       //ControladorJefesDeDepartamento.postJefeDelDepartamento(jefe
+       
+       //jefe = ControladorJefesDeDepartamento.getJefesDeDepartamentoById("00000001");
+       
+        //System.out.println(jefe.getIdDepto());
+        
+       //ControladorJefesDeDepartamento.borrarJefeDeDepartamentoById("00000001");
+       
+       // --PROYECTOS --
+       
+       Proyectos proyectoUno = new Proyectos();
+       
+       proyectoUno.setIdProyecto("00000001");
+       proyectoUno.setIdJefe("00000001");
+       proyectoUno.setNombreProyecto("Web Page");
+       proyectoUno.setPresupuesto(30000);
+       proyectoUno.setFechaDeInicio(LocalDate.now());
+       proyectoUno.setDuracionDeSemanasEsperadas(3);
+       //ControladorDeProyectos.postProyectos(proyectoUno);
+       //ControladorDeProyectos.borrarProyectoById("00000001");
+       ControladorDeProyectos.actualizarTrabajador(proyectoUno);
        
     }
 }
