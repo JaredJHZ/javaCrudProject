@@ -27,11 +27,11 @@ public class ControladorDepartamentos {
         }
    }
     
-   public static void postDepartamentos(Departamentos departamento) {
+   public static String postDepartamentos(Departamentos departamento) {
        prenderBD();
        String id = "";
        if (baseDeDatosConectada) {
-           String sqlQuery = "INSERT INTO Departamentos(idDepto, nombreDeDepartamento) VALUES (?, ?)";
+           String sqlQuery = "INSERT INTO departamentos(idDepto, nombreDeDepartamento) VALUES (?, ?)";
            try (PreparedStatement statement =  BaseDeDatos.conn.prepareStatement(sqlQuery)){
                statement.setString(1, departamento.getIdDepartamento() );
                statement.setString(2, departamento.getNombreDelDepartamento());
@@ -40,10 +40,13 @@ public class ControladorDepartamentos {
                }
            } catch (SQLException ex) {
                System.out.println(ex.getMessage());
+               return "Hubo un error de tipo: "+ex.getMessage();
            } finally {
                BaseDeDatos.turnOffDB();
            }
        }
+       
+       return "Se agrego el departamento con ID "+departamento.getIdDepartamento();
     }
    
    
