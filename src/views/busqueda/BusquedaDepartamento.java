@@ -5,15 +5,18 @@
  */
 package views.busqueda;
 
+import controllers.ControladorDeTrabajadores;
 import controllers.ControladorDepartamentos;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import models.Departamentos;
+import models.Trabajadores;
 import views.actualizaciones.ActualizacionDepartamento;
 import views.altas.AltaDepartamento;
 import views.bajas.BajaDepartamento;
+import views.bajas.BajasTrabajadores;
 import views.consultas.ConsultaDepartamento;
 
 /**
@@ -66,7 +69,7 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 51, 0));
         jPanel1.setToolTipText("");
 
-        jLabel1.setText("Buscar por Id de departamento");
+        jLabel1.setText("Buscar por Id");
 
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -80,16 +83,15 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(118, 118, 118)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(120, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(137, 137, 137))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +135,7 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(98, 98, 98)
                         .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,6 +198,17 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
                                   bajaDepartamento.setVisible(true);
                             }catch(NullPointerException ex ) {
                                 this.setMensaje("No existe un departamento con ese ID");
+                               
+                            }
+                            break;
+                        case "trabajadores":
+                             try{
+                               Trabajadores trabajador = ControladorDeTrabajadores.getTrabajadoresById(this.jTextField1.getText());
+                               BajasTrabajadores bajasTrabajador = new BajasTrabajadores(trabajador);
+                               this.setVisible(false);
+                               bajasTrabajador.setVisible(true);
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un trabajador con ese ID");
                                
                             }
                             break;

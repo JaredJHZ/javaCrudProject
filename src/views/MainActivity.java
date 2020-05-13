@@ -362,12 +362,16 @@ public class MainActivity extends javax.swing.JFrame {
 
     private void bajasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bajasActionPerformed
         // TODO add your handling code here:
-         int seleccion = this.bajas.getSelectedIndex();
-        
-
+        int seleccion = this.bajas.getSelectedIndex();
+        BusquedaDepartamento busqueda;
          switch (seleccion) {
              case 0:
-                 BusquedaDepartamento busqueda = new BusquedaDepartamento("baja", "departamento");
+                 busqueda = new BusquedaDepartamento("baja", "departamento");
+                 this.setVisible(false);
+                 busqueda.setVisible(true);
+                 break;
+             case 1:
+                 busqueda = new BusquedaDepartamento("baja", "trabajadores");
                  this.setVisible(false);
                  busqueda.setVisible(true);
                  break;

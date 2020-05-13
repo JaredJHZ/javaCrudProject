@@ -81,6 +81,7 @@ public class ControladorDeTrabajadores {
                    trabajadorADevolver.setSalario(rs.getDouble("salario"));
                    trabajadorADevolver.setFechaDeContratacion(getDateOfSql(rs.getDate("fechaDeContratacion")));
                    trabajadorADevolver.setFechaDeNacimiento(getDateOfSql(rs.getDate("fechaDeNacimiento")));
+                   trabajadorADevolver.setIdEmpleado(id);
                }
            }catch(SQLException ex) {
                System.out.println(ex.getMessage());
@@ -88,7 +89,7 @@ public class ControladorDeTrabajadores {
                BaseDeDatos.turnOffDB();
            }
        }
-       
+       System.out.println(trabajadorADevolver.getApellidoMaterno());
        return trabajadorADevolver;
    }
    
@@ -96,8 +97,10 @@ public class ControladorDeTrabajadores {
        prenderBD();
        if (baseDeDatosConectada) {
            String sqlQuery = "DELETE FROM trabajadores WHERE idEmpleado = ?";
+           System.out.println(sqlQuery);
            try(PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)) {
                 statement.setString(1, id);
+                System.out.println(statement.toString());
                 if (statement.executeUpdate() > 0) {
                    System.out.println("Borrado de la base de datos");
                }
