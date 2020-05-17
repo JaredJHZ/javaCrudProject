@@ -24,11 +24,7 @@ public class ControladorDeProyectos {
   
     
    private static void prenderBD( ) {
-        if (BaseDeDatos.connectDB()){
-            baseDeDatosConectada = true;
-        } else {
-            baseDeDatosConectada = false;
-        }
+       baseDeDatosConectada = BaseDeDatos.getDataBaseInstance() != null; 
    }
    
    public static Date getDateOfLocalDate(LocalDate date) {
@@ -47,7 +43,7 @@ public class ControladorDeProyectos {
            String sqlQuery = "INSERT INTO proyectos(idProyecto,idJefe, nombreProyecto, presupuesto, fechaDeInicio "
                    + ",duracionDeSemanasEsperadas )"
                    + " VALUES (?,?,?,?,?,?)";
-           try (PreparedStatement statement =  BaseDeDatos.conn.prepareStatement(sqlQuery)){
+           try (PreparedStatement statement =  BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)){
                statement.setString(1, proyecto.getIdProyecto());
                statement.setString(2, proyecto.getIdJefe());
                statement.setString(3, proyecto.getNombreProyecto());
@@ -59,8 +55,6 @@ public class ControladorDeProyectos {
                }
            } catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
            }
        }
     }
@@ -71,7 +65,7 @@ public class ControladorDeProyectos {
        
        if (baseDeDatosConectada) {
            String sqlQuery = "SELECT * FROM proyectos WHERE idProyecto = ?";
-           try (PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)) {
+           try (PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)) {
                statement.setString(1, id);
                ResultSet rs = statement.executeQuery();
                while(rs.next()) {
@@ -84,9 +78,7 @@ public class ControladorDeProyectos {
                }
            }catch(SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
-           }
+           } 
        }
        
        return proyecto;
@@ -97,17 +89,14 @@ public class ControladorDeProyectos {
        prenderBD();
        if (baseDeDatosConectada) {
            String sqlQuery = "DELETE FROM proyectos WHERE idProyecto = ?";
-           try(PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)) {
+           try(PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)) {
                 statement.setString(1, id);
                 if (statement.executeUpdate() > 0) {
                    System.out.println("Borrado de la base de datos");
                }
            }catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           }finally {
-               BaseDeDatos.turnOffDB();
            }
-           
        }
    }
    
@@ -116,7 +105,7 @@ public class ControladorDeProyectos {
        if (baseDeDatosConectada) {
            String sqlQuery = "UPDATE proyectos set idJefe = ?, nombreProyecto = ?, presupuesto = ?, "
                    + "fechaDeInicio = ?, duracionDeSemanasEsperadas = ? WHERE idProyecto = ? ";
-           try (PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)){
+           try (PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)){
                statement.setString(1, proyecto.getIdJefe());
                statement.setString(2, proyecto.getNombreProyecto());
                statement.setDouble(3, proyecto.getPresupuesto());
@@ -128,8 +117,6 @@ public class ControladorDeProyectos {
                }
            }catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
            }
        }
    }

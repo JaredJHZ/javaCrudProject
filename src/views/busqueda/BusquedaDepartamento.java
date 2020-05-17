@@ -7,17 +7,25 @@ package views.busqueda;
 
 import controllers.ControladorDeTrabajadores;
 import controllers.ControladorDepartamentos;
+import controllers.ControladorJefesDeDepartamento;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import models.Departamentos;
+import models.JefesDelDepartamento;
 import models.Trabajadores;
+import views.MainActivity;
 import views.actualizaciones.ActualizacionDepartamento;
+import views.actualizaciones.ActualizacionTrabajador;
+import views.actualizaciones.ActualizarJefe;
 import views.altas.AltaDepartamento;
 import views.bajas.BajaDepartamento;
+import views.bajas.BajaJefes;
 import views.bajas.BajasTrabajadores;
 import views.consultas.ConsultaDepartamento;
+import views.consultas.ConsultasJefe;
+import views.consultas.ConsultasTrabajador;
 
 /**
  *
@@ -61,6 +69,7 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         contenedor = new javax.swing.JPanel();
         mensaje = new javax.swing.JLabel();
 
@@ -78,29 +87,41 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(137, 137, 137))
+                .addContainerGap(103, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(116, 116, 116))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
                 .addComponent(jLabel1)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 14, Short.MAX_VALUE))
         );
 
@@ -118,7 +139,7 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
         contenedorLayout.setVerticalGroup(
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contenedorLayout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(mensaje)
                 .addContainerGap())
         );
@@ -130,12 +151,12 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(98, 98, 98)
-                        .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(121, Short.MAX_VALUE))
+                        .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +165,7 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,6 +233,19 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
                                
                             }
                             break;
+                            
+                         case "jefes":
+                             try{
+                               JefesDelDepartamento jefeDepto = ControladorJefesDeDepartamento.getJefesDeDepartamentoById(this.jTextField1.getText());
+                               BajaJefes bajasTrabajador = new BajaJefes(jefeDepto);
+                               this.setVisible(false);
+                               bajasTrabajador.setVisible(true);
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un trabajador con ese ID");
+                               
+                            }
+                            break;
+                         
                          
                 }
                 break;
@@ -221,12 +255,40 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
                             try {
                                 Departamentos depto = ControladorDepartamentos.getDepartamentoById(this.jTextField1.getText());
                                 ActualizacionDepartamento bajaDepartamento = new ActualizacionDepartamento(depto);
-                                this.setVisible(false);
+
                                 bajaDepartamento.setVisible(true);
+                                
+                                dispose();
                             }catch(NullPointerException ex) {
                                 this.setMensaje("No existe un departamento con ese ID");
                             }
                            
+                            break;
+                            
+                         case "trabajadores":
+                             try{
+                               Trabajadores trabajador = ControladorDeTrabajadores.getTrabajadoresById(this.jTextField1.getText());
+                               ActualizacionTrabajador trabajadorA = new ActualizacionTrabajador(trabajador);
+                               trabajadorA.setVisible(true);
+                               dispose();
+                              
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un trabajador con ese ID");
+                               
+                            }
+                            break;
+                            
+                          case "jefes":
+                             try{
+                               JefesDelDepartamento jefeDepto = ControladorJefesDeDepartamento.getJefesDeDepartamentoById(this.jTextField1.getText());
+                               ActualizarJefe aJefe = new ActualizarJefe(jefeDepto);
+                            
+                               aJefe.setVisible(true);
+                               this.dispose();
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un trabajador con ese ID");
+                               
+                            }
                             break;
                 }
                 break;
@@ -242,10 +304,42 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
                                 this.setMensaje("No existe un departamento con ese ID");
                             }
                             break;
+                            
+                        case "trabajadores":
+                             try{
+                               Trabajadores trabajador = ControladorDeTrabajadores.getTrabajadoresById(this.jTextField1.getText());
+                               ConsultasTrabajador trabajadorc = new ConsultasTrabajador(trabajador);
+                               trabajadorc.setVisible(true);
+                               dispose();
+                              
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un trabajador con ese ID");
+                               
+                            }
+                            break;
+                            case "jefes":
+                             try{
+                               JefesDelDepartamento jefe = ControladorJefesDeDepartamento.getJefesDeDepartamentoById(this.jTextField1.getText());
+                               ConsultasJefe consultaJ = new ConsultasJefe(jefe);
+                               consultaJ.setVisible(true);
+                               dispose();
+                              
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un trabajador con ese ID");
+                               
+                            }
+                            break;
                 }
                 break;
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        MainActivity main = new MainActivity();
+        main.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,6 +380,7 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contenedor;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

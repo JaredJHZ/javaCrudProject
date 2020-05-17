@@ -7,6 +7,7 @@ package views.bajas;
 
 import controllers.ControladorDepartamentos;
 import models.Departamentos;
+import models.JefesDelDepartamento;
 import views.MainActivity;
 
 /**
@@ -22,6 +23,8 @@ public class BajaDepartamento extends javax.swing.JFrame {
     public BajaDepartamento() {
         initComponents();
     }
+    
+
     
     public BajaDepartamento(Departamentos departamento) {
         initComponents();

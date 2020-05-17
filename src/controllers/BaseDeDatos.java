@@ -18,18 +18,23 @@ public class BaseDeDatos {
     private final static String url = "jdbc:postgresql://localhost/buildingprojects";
     private final static String user = "postgres";
     private final static String password = "Atleti123";
-    public static Connection conn;
+    private static Connection conn ;
     
-    public static boolean connectDB() {
-        
-        try {            
-          conn = DriverManager.getConnection(url, user, password);
-          System.out.println("Base de datos conectada");
-        } catch (SQLException e) {
-           System.out.println(e.getMessage());
-           return false;
+    
+    private BaseDeDatos() {
+
+    }
+    
+    
+    public static Connection getDataBaseInstance() {
+        if(conn == null) {
+         try {            
+            conn = DriverManager.getConnection(url, user, password);
+          } catch (SQLException e) {
+             System.out.println(e.getMessage());
+          }
         }
-        return true;
+        return conn;
     }
     
     

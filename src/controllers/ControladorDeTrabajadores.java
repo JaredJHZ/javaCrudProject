@@ -21,11 +21,7 @@ public class ControladorDeTrabajadores {
   
     
    private static void prenderBD( ) {
-        if (BaseDeDatos.connectDB()){
-            baseDeDatosConectada = true;
-        } else {
-            baseDeDatosConectada = false;
-        }
+       baseDeDatosConectada = BaseDeDatos.getDataBaseInstance() != null; 
    }
    
    public static Date getDateOfLocalDate(LocalDate date) {
@@ -43,7 +39,7 @@ public class ControladorDeTrabajadores {
            String sqlQuery = "INSERT INTO trabajadores(idEmpleado,idDepto, nombre, apellidoPaterno, "
                    + "apellidoMaterno, fechaDeNacimiento, fechaDeContratacion,salario)"
                    + " VALUES (?,?,?,?,?,?,?,?)";
-           try (PreparedStatement statement =  BaseDeDatos.conn.prepareStatement(sqlQuery)){
+           try (PreparedStatement statement =  BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)){
                statement.setString(1, trabajador.getIdEmpleado() );
                statement.setString(2, trabajador.getIdDepartamento());
                statement.setString(3, trabajador.getNombre());
@@ -57,8 +53,6 @@ public class ControladorDeTrabajadores {
                }
            } catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
            }
        }
     }
@@ -70,7 +64,7 @@ public class ControladorDeTrabajadores {
        
        if (baseDeDatosConectada) {
            String sqlQuery = "SELECT * FROM trabajadores WHERE idEmpleado = ?";
-           try (PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)) {
+           try (PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)) {
                statement.setString(1, id);
                ResultSet rs = statement.executeQuery();
                while(rs.next()) {
@@ -85,9 +79,7 @@ public class ControladorDeTrabajadores {
                }
            }catch(SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
-           }
+           } 
        }
        System.out.println(trabajadorADevolver.getApellidoMaterno());
        return trabajadorADevolver;
@@ -98,7 +90,7 @@ public class ControladorDeTrabajadores {
        if (baseDeDatosConectada) {
            String sqlQuery = "DELETE FROM trabajadores WHERE idEmpleado = ?";
            System.out.println(sqlQuery);
-           try(PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)) {
+           try(PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)) {
                 statement.setString(1, id);
                 System.out.println(statement.toString());
                 if (statement.executeUpdate() > 0) {
@@ -106,10 +98,7 @@ public class ControladorDeTrabajadores {
                }
            }catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           }finally {
-               BaseDeDatos.turnOffDB();
            }
-           
        }
    }
    
@@ -118,7 +107,7 @@ public class ControladorDeTrabajadores {
        if (baseDeDatosConectada) {
            String sqlQuery = "UPDATE trabajadores set idDepto = ?, nombre = ?, apellidoPaterno = ?, apellidoMaterno = ?, "
                    + "fechaDeNacimiento = ?, fechaDeContratacion = ?, salario = ? WHERE idDepto = ? ";
-           try (PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)){
+           try (PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)){
                statement.setString(1, trabajador.getIdDepartamento());
                statement.setString(2, trabajador.getNombre());
                statement.setString(3, trabajador.getApellidoPaterno());
@@ -132,8 +121,6 @@ public class ControladorDeTrabajadores {
                }
            }catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
            }
        }
    }

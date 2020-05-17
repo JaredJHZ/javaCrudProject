@@ -23,11 +23,7 @@ public class ControladorDeAsignaciones {
   
     
    private static void prenderBD( ) {
-        if (BaseDeDatos.connectDB()){
-            baseDeDatosConectada = true;
-        } else {
-            baseDeDatosConectada = false;
-        }
+        baseDeDatosConectada = BaseDeDatos.getDataBaseInstance() != null; 
    }
    
     public static void postAsignacion(Asignaciones asignacion) {
@@ -36,7 +32,7 @@ public class ControladorDeAsignaciones {
        if (baseDeDatosConectada) {
            String sqlQuery = "INSERT INTO asignaciones(idProyecto,idEmpleado, horasAsignadas, calificacion) "
                    + " VALUES (?,?,?,?)";
-           try (PreparedStatement statement =  BaseDeDatos.conn.prepareStatement(sqlQuery)){
+           try (PreparedStatement statement =  BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)){
                statement.setString(1, asignacion.getIdProyecto());
                statement.setString(2, asignacion.getIdEmpleado());
                statement.setInt(3, asignacion.getHorasAsignadas());
@@ -46,8 +42,6 @@ public class ControladorDeAsignaciones {
                }
            } catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
            }
        }
     }
@@ -58,7 +52,7 @@ public class ControladorDeAsignaciones {
        
        if (baseDeDatosConectada) {
            String sqlQuery = "SELECT * FROM asignaciones WHERE idEmpleado = ?";
-           try (PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)) {
+           try (PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)) {
                statement.setString(1, id);
                ResultSet rs = statement.executeQuery();
                while(rs.next()) {
@@ -69,8 +63,6 @@ public class ControladorDeAsignaciones {
                }
            }catch(SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
            }
        }
        
@@ -81,7 +73,7 @@ public class ControladorDeAsignaciones {
        prenderBD();
        if (baseDeDatosConectada) {
            String sqlQuery = "DELETE FROM asignaciones WHERE idEmpleado = ? AND idProyecto = ?";
-           try(PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)) {
+           try(PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)) {
                 statement.setString(1, idEmpleado);
                 statement.setString(2, idProyecto);
                 if (statement.executeUpdate() > 0) {
@@ -89,8 +81,6 @@ public class ControladorDeAsignaciones {
                }
            }catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           }finally {
-               BaseDeDatos.turnOffDB();
            }
            
        }
@@ -101,7 +91,7 @@ public class ControladorDeAsignaciones {
        if (baseDeDatosConectada) {
            String sqlQuery = "UPDATE asignaciones set horasAsignadas = ?, calificacion = ?"
                    + "WHERE idEmpleado = ? AND idProyecto = ? ";
-           try (PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)){
+           try (PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)){
                statement.setInt(1, asignacion.getHorasAsignadas());
                statement.setInt(2, asignacion.getCalificacion());
                statement.setString(3,asignacion.getIdEmpleado());
@@ -111,9 +101,7 @@ public class ControladorDeAsignaciones {
                }
            }catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
-           }
+           } 
        }
    }
        

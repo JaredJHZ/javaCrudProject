@@ -22,11 +22,7 @@ public class ControladorJefesDeDepartamento {
    private static boolean baseDeDatosConectada;
       
    private static void prenderBD( ) {
-        if (BaseDeDatos.connectDB()){
-            baseDeDatosConectada = true;
-        } else {
-            baseDeDatosConectada = false;
-        }
+       baseDeDatosConectada = BaseDeDatos.getDataBaseInstance() != null; 
    }
    
       public static void postJefeDelDepartamento(JefesDelDepartamento jefe) {
@@ -34,7 +30,7 @@ public class ControladorJefesDeDepartamento {
        String id = "";
        if (baseDeDatosConectada) {
            String sqlQuery = "INSERT INTO jefe_de_departamentos(idEmpleado, idDepto, idJefe) VALUES (?, ?, ?)";
-           try (PreparedStatement statement =  BaseDeDatos.conn.prepareStatement(sqlQuery)){
+           try (PreparedStatement statement =  BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)){
                statement.setString(1, jefe.getIdJefe() );
                statement.setString(2, jefe.getIdDepto() );
                statement.setString(3, jefe.getIdJefe());
@@ -43,8 +39,6 @@ public class ControladorJefesDeDepartamento {
                }
            } catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
            }
        }
     }
@@ -55,7 +49,7 @@ public class ControladorJefesDeDepartamento {
        
        if (baseDeDatosConectada) {
            String sqlQuery = "SELECT * FROM jefe_de_departamentos WHERE idJefe = ?";
-           try (PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)) {
+           try (PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)) {
                statement.setString(1, id);
                ResultSet rs = statement.executeQuery();
                while(rs.next()) {
@@ -65,8 +59,6 @@ public class ControladorJefesDeDepartamento {
                }
            }catch(SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
            }
        }
        
@@ -77,7 +69,7 @@ public class ControladorJefesDeDepartamento {
        prenderBD();
        if (baseDeDatosConectada) {
            String sqlQuery = "DELETE FROM jefe_de_departamentos WHERE idEmpleado = ?";
-           try(PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)) {
+           try(PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)) {
                 statement.setString(1, id);
                 if (statement.executeUpdate() > 0) {
                    System.out.println("Borrado de la base de datos");
@@ -95,7 +87,7 @@ public class ControladorJefesDeDepartamento {
        prenderBD();
        if (baseDeDatosConectada) {
            String sqlQuery = "UPDATE jefe_de_departamentos set idEmpleado = ? WHERE idJefe = ? ";
-           try (PreparedStatement statement = BaseDeDatos.conn.prepareStatement(sqlQuery)){
+           try (PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)){
                statement.setString(1, jefe.getIdEmpleado());
                statement.setString(2, jefe.getIdJefe());
                if (statement.executeUpdate() > 0) {
@@ -103,8 +95,6 @@ public class ControladorJefesDeDepartamento {
                }
            }catch (SQLException ex) {
                System.out.println(ex.getMessage());
-           } finally {
-               BaseDeDatos.turnOffDB();
            }
        }
    }

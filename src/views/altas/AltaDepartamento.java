@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import models.Departamentos;
+import views.MainActivity;
 
 /**
  *
@@ -153,6 +154,11 @@ public class AltaDepartamento extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 18, 0));
 
         cancelar.setText("cancelar");
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
 
         guardar.setText("Guardar");
         guardar.addActionListener(new java.awt.event.ActionListener() {
@@ -314,6 +320,14 @@ public class AltaDepartamento extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_idDeptoKeyReleased
+
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+        // TODO add your handling code here:
+        MainActivity main = new MainActivity();
+        this.setVisible(false);
+        main.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cancelarActionPerformed
     
     private void deleteLastDigit() {
         String texto = this.idDepto.getText();

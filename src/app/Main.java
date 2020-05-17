@@ -27,6 +27,10 @@ import models.Trabajadores;
 public class Main {
     public static void main(String args[]) {
         
+
+        //System.out.println(BaseDeDatos.getDataBaseInstance());
+        //System.out.println(BaseDeDatos.getDataBaseInstance());
+        
         //deptos
         
         //Departamentos departamentoAInsertar = new Departamentos();

@@ -6,6 +6,7 @@
 package views;
 
 import views.altas.AltaDepartamento;
+import views.altas.AltaJefeDepartamento;
 import views.altas.AltaTrabajador;
 import views.busqueda.BusquedaDepartamento;
 
@@ -350,11 +351,17 @@ public class MainActivity extends javax.swing.JFrame {
              case 0:
                  AltaDepartamento altaDepartamento = new AltaDepartamento();
                  altaDepartamento.setVisible(true);
+                 dispose();
                  break;
              case 1:
                  AltaTrabajador altaTrabajador = new AltaTrabajador();
                  altaTrabajador.setVisible(true);
-                 System.out.println("Se selecciono trabajador");
+                 dispose();
+                 break;
+             case 2:
+                 AltaJefeDepartamento altaJefe = new AltaJefeDepartamento();
+                 altaJefe.setVisible(true);
+                 dispose();
                  break;
          }
          
@@ -369,11 +376,19 @@ public class MainActivity extends javax.swing.JFrame {
                  busqueda = new BusquedaDepartamento("baja", "departamento");
                  this.setVisible(false);
                  busqueda.setVisible(true);
+                 dispose();
                  break;
              case 1:
                  busqueda = new BusquedaDepartamento("baja", "trabajadores");
                  this.setVisible(false);
                  busqueda.setVisible(true);
+                 dispose();
+                 break;
+             case 2:
+                 busqueda = new BusquedaDepartamento("baja", "jefes");
+                 this.setVisible(false);
+                 busqueda.setVisible(true);
+                 dispose();
                  break;
          }
     }//GEN-LAST:event_bajasActionPerformed
@@ -388,6 +403,17 @@ public class MainActivity extends javax.swing.JFrame {
                  BusquedaDepartamento busqueda = new BusquedaDepartamento("actualizacion", "departamento");
                  this.setVisible(false);
                  busqueda.setVisible(true);
+                 dispose();
+                 break;
+              case 1:
+                 BusquedaDepartamento busquedaT = new BusquedaDepartamento("actualizacion", "trabajadores");
+                 busquedaT.setVisible(true);
+                 dispose();
+                 break;
+              case 2:
+                 BusquedaDepartamento busquedaA = new BusquedaDepartamento("actualizacion", "jefes");
+                 busquedaA.setVisible(true);
+                 dispose();
                  break;
          }
     }//GEN-LAST:event_actiualizacionActionPerformed
@@ -402,6 +428,17 @@ public class MainActivity extends javax.swing.JFrame {
                  BusquedaDepartamento busqueda = new BusquedaDepartamento("consulta", "departamento");
                  this.setVisible(false);
                  busqueda.setVisible(true);
+                 dispose();
+                 break;
+            case 1:
+                 BusquedaDepartamento busquedaT = new BusquedaDepartamento("consulta", "trabajadores");
+                 busquedaT.setVisible(true);
+                 dispose();
+                 break;
+             case 2:
+                 BusquedaDepartamento busquedaJ = new BusquedaDepartamento("consulta", "jefes");
+                 busquedaJ.setVisible(true);
+                 dispose();
                  break;
          }
     }//GEN-LAST:event_consultasActionPerformed
