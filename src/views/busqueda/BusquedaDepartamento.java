@@ -5,6 +5,8 @@
  */
 package views.busqueda;
 
+import controllers.ControladorDeAsignaciones;
+import controllers.ControladorDeProyectos;
 import controllers.ControladorDeTrabajadores;
 import controllers.ControladorDepartamentos;
 import controllers.ControladorJefesDeDepartamento;
@@ -12,17 +14,25 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+import models.Asignaciones;
 import models.Departamentos;
 import models.JefesDelDepartamento;
+import models.Proyectos;
 import models.Trabajadores;
 import views.MainActivity;
+import views.actualizaciones.ActualizacionAsignacion;
 import views.actualizaciones.ActualizacionDepartamento;
 import views.actualizaciones.ActualizacionTrabajador;
 import views.actualizaciones.ActualizarJefe;
+import views.actualizaciones.ActualizarProyecto;
 import views.altas.AltaDepartamento;
+import views.bajas.BajaAsignacion;
 import views.bajas.BajaDepartamento;
 import views.bajas.BajaJefes;
+import views.bajas.BajaProyecto;
 import views.bajas.BajasTrabajadores;
+import views.consultas.ConsultaDeAsignacion;
+import views.consultas.ConsultaDeProyecto;
 import views.consultas.ConsultaDepartamento;
 import views.consultas.ConsultasJefe;
 import views.consultas.ConsultasTrabajador;
@@ -43,6 +53,7 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
     
     public BusquedaDepartamento() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     public BusquedaDepartamento(String operacion, String modelo){
@@ -52,7 +63,8 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
         this.jTextField1.setText("");
         this.contenedor.setVisible(false);
         this.contenedor.setSize(100, 100);
-        this.contenedor.setMaximumSize(new Dimension(100, 100));
+        this.contenedor.setMaximumSize(new Dimension(100, 70));
+         setLocationRelativeTo(null);
     }
 
     /**
@@ -74,10 +86,15 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
         mensaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(370, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 0));
         jPanel1.setToolTipText("");
 
+        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
+
+        jLabel1.setForeground(java.awt.Color.white);
         jLabel1.setText("Buscar por Id");
 
         jButton1.setText("Buscar");
@@ -98,31 +115,30 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(103, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(116, 116, 116))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(125, 125, 125))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(41, 41, 41)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 14, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2)))
         );
 
         mensaje.setText("jLabel2");
@@ -149,40 +165,33 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(112, 112, 112)
+                .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(contenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
         );
 
         pack();
@@ -241,7 +250,30 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
                                this.setVisible(false);
                                bajasTrabajador.setVisible(true);
                             }catch(NullPointerException ex ) {
-                                this.setMensaje("No existe un trabajador con ese ID");
+                                this.setMensaje("No existe un jefe de proyecto con ese ID");
+                               
+                            }
+                            break;
+                         
+                          case "proyectos":
+                             try{
+                               Proyectos proyecto = ControladorDeProyectos.getProyectoById(this.jTextField1.getText());
+                               BajaProyecto bajaProyecto = new BajaProyecto(proyecto);
+                               bajaProyecto.setVisible(true);
+                               dispose();
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un proyecto con ese ID");
+                               
+                            }
+                            break;
+                         case "asignaciones":
+                             try{
+                               Asignaciones asignacion = ControladorDeAsignaciones.getAsignacionesByIdOfEmpleado(this.jTextField1.getText());
+                               BajaAsignacion bajaAsignacion = new BajaAsignacion(asignacion);
+                               bajaAsignacion.setVisible(true);
+                               dispose();
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un empleado con esa asignacion");
                                
                             }
                             break;
@@ -286,7 +318,32 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
                                aJefe.setVisible(true);
                                this.dispose();
                             }catch(NullPointerException ex ) {
-                                this.setMensaje("No existe un trabajador con ese ID");
+                                this.setMensaje("No existe un jefe de proyecto con ese ID");
+                               
+                            }
+                            break;
+                            
+                              
+                          case "proyectos":
+                             try{
+                               Proyectos proyecto = ControladorDeProyectos.getProyectoById(this.jTextField1.getText());
+                               ActualizarProyecto aProyecto = new ActualizarProyecto(proyecto);
+                               aProyecto.setVisible(true);
+                               this.dispose();
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un proyecto con ese ID");
+                               
+                            }
+                            break;
+                            
+                          case "asignaciones":
+                             try{
+                               Asignaciones asignacion = ControladorDeAsignaciones.getAsignacionesByIdOfEmpleado(this.jTextField1.getText());
+                               ActualizacionAsignacion aProyecto = new ActualizacionAsignacion(asignacion);
+                               aProyecto.setVisible(true);
+                               this.dispose();
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un empleado con esa asignacion");
                                
                             }
                             break;
@@ -325,7 +382,32 @@ public class BusquedaDepartamento extends javax.swing.JFrame {
                                dispose();
                               
                             }catch(NullPointerException ex ) {
-                                this.setMensaje("No existe un trabajador con ese ID");
+                                this.setMensaje("No existe un jefe de proyecto con ese ID");
+                               
+                            }
+                            break;
+                            
+                             
+                         case "proyectos":
+                             try{
+                               Proyectos proyecto = ControladorDeProyectos.getProyectoById(this.jTextField1.getText());
+                               ConsultaDeProyecto aProyecto = new ConsultaDeProyecto(proyecto);
+                               aProyecto.setVisible(true);
+                               this.dispose();
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe un proyecto con ese ID");
+                               
+                            }
+                            break;
+                            
+                        case "asignaciones":
+                             try{
+                               Asignaciones asignacion = ControladorDeAsignaciones.getAsignacionesByIdOfEmpleado(this.jTextField1.getText());
+                               ConsultaDeAsignacion asigProyecto = new ConsultaDeAsignacion(asignacion);
+                               asigProyecto.setVisible(true);
+                               this.dispose();
+                            }catch(NullPointerException ex ) {
+                                this.setMensaje("No existe una asignacion con ese ID");
                                
                             }
                             break;

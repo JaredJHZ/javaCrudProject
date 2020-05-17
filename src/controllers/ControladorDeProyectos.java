@@ -72,7 +72,7 @@ public class ControladorDeProyectos {
                    proyecto.setIdProyecto(rs.getString("idProyecto"));
                    proyecto.setIdJefe(rs.getString("idJefe"));
                    proyecto.setNombreProyecto(rs.getString("nombreProyecto"));
-                   proyecto.setDuracionDeSemanasEsperadas(rs.getInt("duracionDeSemanas"));
+                   proyecto.setDuracionDeSemanasEsperadas(rs.getInt("duracionDeSemanasEsperadas"));
                    proyecto.setPresupuesto(rs.getDouble("presupuesto"));
                    proyecto.setFechaDeInicio(getDateOfSql(rs.getDate("fechaDeInicio")));
                }
@@ -100,8 +100,9 @@ public class ControladorDeProyectos {
        }
    }
    
-    public static void actualizarTrabajador(Proyectos proyecto) {
+    public static void actualizarProyecto(Proyectos proyecto) {
        prenderBD();
+        System.out.println("......1 ......");
        if (baseDeDatosConectada) {
            String sqlQuery = "UPDATE proyectos set idJefe = ?, nombreProyecto = ?, presupuesto = ?, "
                    + "fechaDeInicio = ?, duracionDeSemanasEsperadas = ? WHERE idProyecto = ? ";
@@ -112,6 +113,7 @@ public class ControladorDeProyectos {
                statement.setDate(4, getDateOfLocalDate(proyecto.getFechaDeInicio()));
                statement.setInt(5, proyecto.getDuracionDeSemanasEsperadas());
                statement.setString(6, proyecto.getIdProyecto());
+               System.out.println(statement.toString());
                if (statement.executeUpdate() > 0) {
                     System.out.println("Datos actualizados");
                }

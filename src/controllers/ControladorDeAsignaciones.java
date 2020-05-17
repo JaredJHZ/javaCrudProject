@@ -90,12 +90,14 @@ public class ControladorDeAsignaciones {
        prenderBD();
        if (baseDeDatosConectada) {
            String sqlQuery = "UPDATE asignaciones set horasAsignadas = ?, calificacion = ?"
-                   + "WHERE idEmpleado = ? AND idProyecto = ? ";
+                   + " WHERE idEmpleado = ? AND idProyecto = ? ";
            try (PreparedStatement statement = BaseDeDatos.getDataBaseInstance().prepareStatement(sqlQuery)){
                statement.setInt(1, asignacion.getHorasAsignadas());
                statement.setInt(2, asignacion.getCalificacion());
                statement.setString(3,asignacion.getIdEmpleado());
                statement.setString(4, asignacion.getIdProyecto());
+               System.out.println("xd");
+               System.out.println(statement.toString());
                if (statement.executeUpdate() > 0) {
                     System.out.println("Datos actualizados");
                }
